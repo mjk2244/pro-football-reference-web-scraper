@@ -93,7 +93,7 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
         data["Rec"].append(int(row.find('td', {'data-stat': 'rec'}).text))
         data["Rec_Yds"].append(int(row.find('td', {'data-stat': 'rec_yds'}).text))
         data["Rec_TD"].append(int(row.find('td', {'data-stat': 'rec_td'}).text))
-        data["Snap_Pct"].append(int(row.find('td', {'data-stat': 'off_pct'}).text))
+        data["Snap_Pct"].append(float(int(row.find('td', {'data-stat': 'off_pct'}).text[:-1]) / 100))
 
     print(pd.DataFrame(data = data))
     return pd.DataFrame(data = data)
@@ -126,7 +126,7 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     return pd.DataFrame(data = data)
 
 def main():
-    get_player_game_log(player = "Tom Brady", season = 2022)
+    get_player_game_log(player = "Stefon Diggs", season = 2022)
 
 if __name__ == "__main__":
     main()
