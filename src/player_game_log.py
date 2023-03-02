@@ -1,6 +1,7 @@
-import pandas as pd
+import pandas as pd  # type: ignore
 from bs4 import BeautifulSoup
 import requests
+
 
 # function that returns a player's game log in a given season
 def get_player_game_log(player="Tom Brady", season=2022) -> pd.DataFrame:
@@ -48,7 +49,7 @@ def make_request(player="Tom Brady", season=2022):
 
 
 # helper function that takes a requests.Response object and returns a BeautifulSoup object
-def get_soup(request: requests):
+def get_soup(request):
     return BeautifulSoup(request.text, "html.parser")
 
 
