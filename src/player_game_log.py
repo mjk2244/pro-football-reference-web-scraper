@@ -2,7 +2,6 @@ import pandas as pd  # type: ignore
 from bs4 import BeautifulSoup
 import requests
 
-
 # function that returns a player's game log in a given season
 def get_player_game_log(player="Tom Brady", season=2022) -> pd.DataFrame:
     # make HTTP request and extract HTML
