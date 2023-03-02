@@ -8,13 +8,15 @@ build-backend="setuptools.build_meta"
 
 [project]
 name = "pro-football_reference_web_scraper"
-authors = [{name = "Your Name", email = "Your_Email@gmail.com"}]
+authors = [{name = "Matthew Kim", email = "mjk2244@columbia.edu"}]
 description="An example python project"
 readme = "README.md"
 version = "0.0.1"
 requires-python = ">=3.7"
 
-dependencies = []
+dependencies = ["beautifulsoup4>=4.9.0",
+                "requests>=2.28.2",
+                "pandas>=1.5.3"]
 
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
@@ -33,7 +35,7 @@ classifiers = [
 file = "LICENSE"
 
 [project.urls]
-repository = "https://github.com/columbiaoss/example-project-python"
+repository = "https://github.com/mjk2244/pro-football-reference-web-scraper"
 
 [project.optional-dependencies]
 develop = [
@@ -64,10 +66,8 @@ ignore = [
 ignore = ['E203', 'W503']
 max-line-length=120
 exclude=[
-    'example_project_python/tests/*'
 ]
 per-file-ignores= [
-    'example_project_python/__init__.py:F401, F403'
 ]
 
 
@@ -96,4 +96,4 @@ python_version = '3.10'
 # disallow_untyped_calls = true
 
 [tool.pytest.ini_options]
-testpaths = 'tests/src'
+testpaths = ['tests/unit', 'tests/integration']
