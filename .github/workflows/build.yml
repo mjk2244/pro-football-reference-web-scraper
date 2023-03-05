@@ -1,0 +1,58 @@
+name: Build Status
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+    paths-ignore:
+      - CONTRIBUTING.md
+      - LICENSE
+      - README.md
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: "pip"
+        cache-dependency-path: 'pyproject.toml'
+
+    - name: Install dependencies
+      run: |
+        make develop
+    - name: Build 
+      run: |
+        make build
+    - name: Lint
+      run: |
+        make lint
+    - name: Checks
+      run: |
+        make checks
+    - name: Test
+      run: |
+        make coverage
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: pytest-results-${{ matrix.os }}-${{ matrix.python-version }}
+        path: python_junit.xml
+      if: ${{ always() }}
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
