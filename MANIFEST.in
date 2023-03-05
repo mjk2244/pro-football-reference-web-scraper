@@ -8,6 +8,10 @@ include .bumpversion.cfg
 include pyproject.toml
 include Makefile
 
+recursive-include test *.py
+include tests/unit
+include tests/integration
+
 prune .github
 exclude .gitignore
 exclude .gitattributes
