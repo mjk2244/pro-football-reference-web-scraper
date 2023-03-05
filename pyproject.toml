@@ -9,7 +9,7 @@ build-backend="setuptools.build_meta"
 [project]
 name = "pro-football_reference_web_scraper"
 authors = [{name = "Matthew Kim", email = "mjk2244@columbia.edu"}]
-description="An example python project"
+description="Stats web scraper of Pro Football Reference"
 readme = "README.md"
 version = "0.0.1"
 requires-python = ">=3.7"
