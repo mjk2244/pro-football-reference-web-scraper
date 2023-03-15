@@ -1,4 +1,4 @@
-graft example_project_python
+graft pro-football-reference-web-scraper
 
 include LICENSE
 include README.md
