@@ -16,7 +16,8 @@ requires-python = ">=3.7"
 
 dependencies = ["beautifulsoup4>=4.9.0",
                 "requests>=2.28.2",
-                "pandas>=1.5.3"]
+                "pandas>=1.5.3",
+                "haversine>=2.4.0"]
 
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",

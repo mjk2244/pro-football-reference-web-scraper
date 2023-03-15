@@ -24,7 +24,7 @@ lints: lint
 
 format:  ## run autoformatting with black
 	python -m black setup.py
-	python -m black src/player_game_log.py
+	python -m black src
 	python -m black tests
 
 # alias
