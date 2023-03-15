@@ -3,7 +3,6 @@ import requests
 import pandas as pd
 from datetime import date
 from haversine import haversine, Unit
-import time
 
 # TODO: add older teams to this list
 team_hrefs = {
