@@ -2,14 +2,18 @@ graft example_project_python
 
 include LICENSE
 include README.md
+include *.py
 
 include .bumpversion.cfg
 include pyproject.toml
 include Makefile
 
+recursive-include tests *.py
+
 prune .github
 exclude .gitignore
 exclude .gitattributes
+exclude CONTRIBUTING.md
 
 # Patterns to exclude from any directory
 global-exclude *~
