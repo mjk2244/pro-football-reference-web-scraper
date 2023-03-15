@@ -200,6 +200,14 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         j += 1
     games.pop(j)
 
+    # remove canceled games
+    to_delete = []
+    for j in range(len(games)):
+        if games[j].find('td', {'data-stat': 'boxscore_word'}).text == 'canceled':
+            to_delete.append(j)
+    for k in to_delete:
+        games.pop(k)
+
     # 1993 had two bye weeks
     if season == 1993:
         while games[j].find('td', {'data-stat': 'opp'}).text != 'Bye Week':
@@ -217,7 +225,18 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             else:
                 date1 = games[i - 1].find('td', {'data-stat': 'game_date'}).text.split(' ')
                 date2 = games[i].find('td', {'data-stat': 'game_date'}).text.split(' ')
-            rest_days = date(season, months[date2[0]], int(date2[1])) - date(season, months[date1[0]], int(date1[1]))
+            if date1[0] == 'January':
+                rest_days = date(season + 1, months[date2[0]], int(date2[1])) - date(
+                    season + 1, months[date1[0]], int(date1[1])
+                )
+            elif date2[0] == 'January':
+                rest_days = date(season + 1, months[date2[0]], int(date2[1])) - date(
+                    season, months[date1[0]], int(date1[1])
+                )
+            else:
+                rest_days = date(season + 1, months[date2[0]], int(date2[1])) - date(
+                    season + 1, months[date1[0]], int(date1[1])
+                )
         else:
             rest_days = date(2022, 7, 11) - date(2022, 7, 1)  # setting first game as 10 rest days
 
@@ -269,8 +288,7 @@ def calculate_distance(city1: dict, city2: dict) -> float:
 
 
 def main():
-    print(get_team_game_log('Miami Dolphins', 2013))
-    get_team_game_log('Miami Dolphins', 2013).to_csv('Miami.csv')
+    print(get_team_game_log('Buffalo Bills', 2022))
 
 
 if __name__ == '__main__':
