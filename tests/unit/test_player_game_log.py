@@ -7,10 +7,24 @@ import pandas as pd
 class TestClass:
     # UNIT TESTS ------------------------- #
 
-    def test_make_request(self):
-        response = p.make_request("Tom Brady", 2022)
+    def test_make_request_list(self):
+        response = p.make_request_list('Ryan Tannehill', 'QB', 2022)
         # asserting that the HTTP request was made with the correct url
-        assert response.url == "https://www.pro-football-reference.com/players/B/BradTo00/gamelog/2022/"
+        assert response.url == 'https://www.pro-football-reference.com/players/T/'
+
+    def test_get_href(self):
+        fake_html = """<div id = 'div_players'><p><a href="/players/A/AlleJo00.htm">Josh Allen</a> (C) 2014-2014</p>
+        <p><b><a href="/players/A/AlleJo02.htm">Josh Allen</a> (QB)</b> 2018-2022</p>
+        <p><b><a href="/players/A/AlleJo03.htm">Josh Allen</a> (EDGE)</b> 2019-2022</p></div>"""
+        soup = BeautifulSoup(fake_html, 'html.parser')
+        assert p.get_href('Josh Allen', 'C', 2014, soup) == '/players/A/AlleJo00.htm'
+        assert p.get_href('Josh Allen', 'QB', 2022, soup) == '/players/A/AlleJo02.htm'
+        assert p.get_href('Josh Allen', 'EDGE', 2020, soup) == '/players/A/AlleJo03.htm'
+
+    def test_make_request_player(self):
+        response = p.make_request_player('/players/G/GurlTo01', 2018)
+        # asserting that the "HTTP request was made with the correct url"
+        assert response.url == 'https://www.pro-football-reference.com/players/G/GurlTo01/gamelog/2018/'
 
     @patch('requests.get')
     def test_get_soup(self, mock_requests):
