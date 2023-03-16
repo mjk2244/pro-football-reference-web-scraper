@@ -281,11 +281,3 @@ def calculate_distance(city1: dict, city2: dict) -> float:
     coordinates1 = (city1['latitude'], city1['longitude'])
     coordinates2 = (city2['latitude'], city2['longitude'])
     return haversine(coordinates1, coordinates2, unit=Unit.MILES)
-
-
-def main():
-    print(get_team_game_log('Buffalo Bills', 2022))
-
-
-if __name__ == '__main__':
-    main()
