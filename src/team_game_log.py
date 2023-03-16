@@ -137,6 +137,7 @@ cities = {
     # 'Boston Patriots': 'Boston' add Boston to locations dictionary
 }
 
+
 # function that returns a team's game log in a given season
 def get_team_game_log(team: str, season: int) -> pd.DataFrame:
     # make HTTP request and extract HTML
@@ -156,6 +157,7 @@ def make_request(team: str, season: int):
 
 def get_soup(request) -> BeautifulSoup:
     return BeautifulSoup(request.text, 'html.parser')
+
 
 def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
     # set up data frame
