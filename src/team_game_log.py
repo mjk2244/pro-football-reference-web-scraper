@@ -49,23 +49,10 @@ team_hrefs = {
     'Houston Texans': 'htx',
     'Oakland Raiders': 'rai',
     'San Diego Chargers': 'sdg',
-<<<<<<< HEAD
     'St. Louis Rams': 'ram',
 }
 
 months = {"September": 9, "October": 10, "November": 11, "December": 12, "January": 1}
-=======
-    'St. Louis Rams': 'ram'
-}
-
-months = {
-    "September": 9,
-    "October": 10,
-    "November": 11,
-    "December": 12,
-    "January": 1
-}
->>>>>>> fee4e8d (first pass at team game log)
 
 locations = {
     'Phoenix': {'latitude': 33.4352, 'longitude': 112.0101, 'airport': 'PHX'},
@@ -82,13 +69,7 @@ locations = {
     'Indianapolis': {'latitude': 39.7169, 'longitude': 86.2956, 'airport': 'IND'},
     'Dallas': {'latitude': 32.8998, 'longitude': 97.0403, 'airport': 'DFW'},
     'Kansas City': {'latitude': 39.3036, 'longitude': 94.7093, 'airport': 'MCI'},
-<<<<<<< HEAD
     'Denver': {'latitude': 39.8564, 'longitude': 104.6764, 'airport': 'DEN'},
-=======
-    'Los Angeles': {'latitude': 33.9416, 'longitude': 118.4085, 'airport': 'LAX'},
-    'Denver': {'latitude': 39.8564, 'longitude': 104.6764, 'airport': 'DEN'},
-    'New York': {'latitude': 40.6895, 'longitude': 74.1745, 'airport': 'EWR'},
->>>>>>> fee4e8d (first pass at team game log)
     'Providence': {'latitude': 41.7235, 'longitude': 71.4270, 'airport': 'PVD'},
     'Las Vegas': {'latitude': 36.0840, 'longitude': 115.1537, 'airport': 'LAS'},
     'Nashville': {'latitude': 36.1263, 'longitude': 86.6774, 'airport': 'BNA'},
