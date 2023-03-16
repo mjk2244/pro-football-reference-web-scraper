@@ -3,6 +3,10 @@ import requests
 import pandas as pd
 from datetime import date
 from haversine import haversine, Unit
+<<<<<<< HEAD
+=======
+import time
+>>>>>>> fee4e8d (first pass at team game log)
 
 # TODO: add older teams to this list
 team_hrefs = {
@@ -49,10 +53,23 @@ team_hrefs = {
     'Houston Texans': 'htx',
     'Oakland Raiders': 'rai',
     'San Diego Chargers': 'sdg',
+<<<<<<< HEAD
     'St. Louis Rams': 'ram',
 }
 
 months = {"September": 9, "October": 10, "November": 11, "December": 12, "January": 1}
+=======
+    'St. Louis Rams': 'ram'
+}
+
+months = {
+    "September": 9,
+    "October": 10,
+    "November": 11,
+    "December": 12,
+    "January": 1
+}
+>>>>>>> fee4e8d (first pass at team game log)
 
 locations = {
     'Phoenix': {'latitude': 33.4352, 'longitude': 112.0101, 'airport': 'PHX'},
@@ -69,7 +86,13 @@ locations = {
     'Indianapolis': {'latitude': 39.7169, 'longitude': 86.2956, 'airport': 'IND'},
     'Dallas': {'latitude': 32.8998, 'longitude': 97.0403, 'airport': 'DFW'},
     'Kansas City': {'latitude': 39.3036, 'longitude': 94.7093, 'airport': 'MCI'},
+<<<<<<< HEAD
     'Denver': {'latitude': 39.8564, 'longitude': 104.6764, 'airport': 'DEN'},
+=======
+    'Los Angeles': {'latitude': 33.9416, 'longitude': 118.4085, 'airport': 'LAX'},
+    'Denver': {'latitude': 39.8564, 'longitude': 104.6764, 'airport': 'DEN'},
+    'New York': {'latitude': 40.6895, 'longitude': 74.1745, 'airport': 'EWR'},
+>>>>>>> fee4e8d (first pass at team game log)
     'Providence': {'latitude': 41.7235, 'longitude': 71.4270, 'airport': 'PVD'},
     'Las Vegas': {'latitude': 36.0840, 'longitude': 115.1537, 'airport': 'LAS'},
     'Nashville': {'latitude': 36.1263, 'longitude': 86.6774, 'airport': 'BNA'},
@@ -87,7 +110,11 @@ locations = {
     'Houston': {'latitude': 29.9902, 'longitude': 95.3368, 'airport': 'IAH'},
     'Oakland': {'latitude': 37.7126, 'longitude': 122.2197, 'airport': 'OAK'},
     'San Diego': {'latitude': 32.7338, 'longitude': 117.1933, 'airport': 'SAN'},
+<<<<<<< HEAD
     'St. Louis': {'latitude': 38.7499, 'longitude': 90.3748, 'airport': 'STL'},
+=======
+    'St. Louis': {'latitude': 38.7499, 'longitude': 90.3748, 'airport': 'STL'}
+>>>>>>> fee4e8d (first pass at team game log)
 }
 
 cities = {
@@ -137,7 +164,10 @@ cities = {
     # 'Boston Patriots': 'Boston' add Boston to locations dictionary
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fee4e8d (first pass at team game log)
 # function that returns a team's game log in a given season
 def get_team_game_log(team: str, season: int) -> pd.DataFrame:
     # make HTTP request and extract HTML
@@ -151,14 +181,28 @@ def get_team_game_log(team: str, season: int) -> pd.DataFrame:
 
 
 def make_request(team: str, season: int):
+<<<<<<< HEAD
     url = 'https://pro-football-reference.com/teams/%s/%s.htm' % (team_hrefs[team], str(season))
     return requests.get(url)
 
+=======
+    # 3 second delay
+    time.sleep(3)
+
+    url = 'https://pro-football-reference.com/teams/%s/%s.htm' % (
+            team_hrefs[team],
+            str(season)
+            )
+    return requests.get(url)
+>>>>>>> fee4e8d (first pass at team game log)
 
 def get_soup(request) -> BeautifulSoup:
     return BeautifulSoup(request.text, 'html.parser')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> fee4e8d (first pass at team game log)
 def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
     # set up data frame
     data = {
@@ -176,12 +220,17 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         'rush_yds': [],
         'opp_tot_yds': [],
         'opp_pass_yds': [],
+<<<<<<< HEAD
         'opp_rush_yds': [],
+=======
+        'opp_rush_yds': []
+>>>>>>> fee4e8d (first pass at team game log)
     }
     df = pd.DataFrame(data)
 
     # loading game data
     games = soup.find_all('tbody')[1].find_all('tr')
+<<<<<<< HEAD
 
     # remove playoff games
     j = 0
@@ -210,6 +259,25 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             j += 1
         games.pop(j)
 
+=======
+    
+    # remove playoff games
+    j = 0
+    while j < len(games) and games[j].find('td', {'data-stat': 'game_date'}).text != 'Playoffs': j += 1
+    for k in range(j, len(games)): games.pop()
+
+    # remove bye week
+    j = 0
+    while games[j].find('td', {'data-stat': 'opp'}).text != 'Bye Week': j += 1
+    games.pop(j)
+
+    # 1993 had two bye weeks
+    if season == 1993:
+        while games[j].find('td', {'data-stat': 'opp'}).text != 'Bye Week': j += 1
+        games.pop(j)
+
+
+>>>>>>> fee4e8d (first pass at team game log)
     # gathering data
     for i in range(len(games)):
         week = int(games[i].find('th', {'data-stat': 'week_num'}).text)
@@ -221,6 +289,7 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             else:
                 date1 = games[i - 1].find('td', {'data-stat': 'game_date'}).text.split(' ')
                 date2 = games[i].find('td', {'data-stat': 'game_date'}).text.split(' ')
+<<<<<<< HEAD
             if date1[0] == 'January':
                 rest_days = date(season + 1, months[date2[0]], int(date2[1])) - date(
                     season + 1, months[date1[0]], int(date1[1])
@@ -235,6 +304,10 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
                 )
         else:
             rest_days = date(2022, 7, 11) - date(2022, 7, 1)  # setting first game as 10 rest days
+=======
+            rest_days = date(season, months[date2[0]], int(date2[1])) - date(season, months[date1[0]], int(date1[1]))
+        else: rest_days = date(2022, 7, 11) - date(2022, 7, 1) # setting first game as 10 rest days
+>>>>>>> fee4e8d (first pass at team game log)
 
         opp = games[i].find('td', {'data-stat': 'opp'}).text
 
@@ -256,6 +329,7 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         opp_rush_yds = int(games[i].find('td', {'data-stat': 'rush_yds_def'}).text)
 
         # add row to data frame
+<<<<<<< HEAD
         df.loc[len(df.index)] = [
             week,
             day,
@@ -289,3 +363,20 @@ def main():
 
 if __name__ == '__main__':
     main()
+=======
+        df.loc[len(df.index)] = [week, day, rest_days, home_team, distance_travelled, opp, result, points_for, points_allowed, tot_yds, pass_yds, rush_yds, opp_tot_yds, opp_pass_yds, opp_rush_yds]
+    
+    return df
+
+def calculate_distance(city1: dict, city2: dict) -> float:
+    coordinates1 = (city1['latitude'], city1['longitude'])
+    coordinates2 = (city2['latitude'], city2['longitude'])
+    return haversine(coordinates1, coordinates2, unit = Unit.MILES)
+
+def main():
+    print(get_team_game_log('Miami Dolphins', 2013))
+    get_team_game_log('Miami Dolphins', 2013).to_csv('Miami.csv')
+
+if __name__ == '__main__':
+    main()
+>>>>>>> fee4e8d (first pass at team game log)
