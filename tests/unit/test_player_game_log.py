@@ -1,4 +1,4 @@
-from src import player_game_log as p
+from pro_football_reference_web_scraper import player_game_log as p
 from bs4 import BeautifulSoup
 from unittest.mock import MagicMock, patch
 import pandas as pd

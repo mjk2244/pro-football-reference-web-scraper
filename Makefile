@@ -15,8 +15,8 @@ install:  ## install library
 # LINTS #
 #########
 lint:  ## run static analysis with flake8
-	python -m black --check src setup.py
-	python -m flake8 src setup.py
+	python -m black --check pro_football_reference_web_scraper setup.py
+	python -m flake8 pro_football_reference_web_scraper setup.py
 	python -m black --check tests setup.py
 	python -m flake8 tests setup.py
 
@@ -25,7 +25,7 @@ lints: lint
 
 format:  ## run autoformatting with black
 	python -m black setup.py
-	python -m black src
+	python -m black pro_football_reference_web_scraper
 	python -m black tests
 
 # alias
@@ -38,7 +38,7 @@ check:  ## check assets for packaging
 checks: check
 
 annotate:  ## run type checking
-	python -m mypy src
+	python -m mypy pro_football_reference_web_scraper
 
 #########
 # TESTS #
@@ -48,7 +48,7 @@ test: ## clean and run unit and integration tests
 	python3 -m pytest -v tests/integration
 
 coverage:  ## clean and run unit tests with coverage
-	python3 -m pytest -v tests/unit --cov=src --cov-branch --cov-fail-under=50 --cov-report term-missing
+	python3 -m pytest -v tests/unit --cov=pro_football_reference_web_scraper --cov-branch --cov-fail-under=50 --cov-report term-missing
 
 # Alias
 tests: test

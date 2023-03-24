@@ -1,4 +1,4 @@
-from src import team_game_log as t
+from pro_football_reference_web_scraper import team_game_log as t
 from bs4 import BeautifulSoup
 from unittest.mock import MagicMock, patch
 
