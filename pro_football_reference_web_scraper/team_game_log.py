@@ -151,7 +151,7 @@ def get_team_game_log(team: str, season: int) -> pd.DataFrame:
 
 
 def make_request(team: str, season: int):
-    url = 'https://pro-football-reference.com/teams/%s/%s.htm' % (team_hrefs[team], str(season))
+    url = 'https://www.pro-football-reference.com/teams/%s/%s.htm' % (team_hrefs[team], str(season))
     return requests.get(url)
 
 
