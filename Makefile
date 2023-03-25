@@ -44,11 +44,10 @@ annotate:  ## run type checking
 # TESTS #
 #########
 test: ## clean and run unit and integration tests
-	python3 -m pytest -v tests/unit
-	python3 -m pytest -v tests/integration
+	python3 -m pytest -v tests
 
 coverage:  ## clean and run unit tests with coverage
-	python3 -m pytest -v tests/unit --cov=pro_football_reference_web_scraper --cov-branch --cov-fail-under=50 --cov-report term-missing
+	python3 -m pytest -v tests --cov=pro_football_reference_web_scraper --cov-branch --cov-fail-under=50 --cov-report term-missing
 
 # Alias
 tests: test
