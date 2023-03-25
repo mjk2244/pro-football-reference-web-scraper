@@ -50,7 +50,7 @@ def make_request_list(player: str, position: str, season: int):
 
 # helper function that makes a HTTP request for a given player's game log
 def make_request_player(href: str, season: int):
-    url = 'https://pro-football-reference.com/%s/gamelog/%s/' % (href, season)
+    url = 'https://www.pro-football-reference.com%s/gamelog/%s/' % (href, season)
     return requests.get(url)
 
 
