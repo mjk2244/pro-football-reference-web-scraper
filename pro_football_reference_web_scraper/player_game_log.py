@@ -7,6 +7,19 @@ import requests
 # player: player's full name (e.g. Tom Brady)
 # position: abbreviation (QB, RB, WR, TE only)
 def get_player_game_log(player: str, position: str, season: int) -> pd.DataFrame:
+    """A function to retrieve a player's game log in a given season.
+
+    This function returns a pandas DataFrame of a NFL player's game log in a given season, including relevant position-specific statistics.
+
+    Args:
+        player (:obj: `str`): A player in the NFL's full name, as it appears on [Pro Football Reference](https://www.pro-football-reference.com/)
+        position (:obj: `str`): The position the player plays. Must be 'QB', 'RB', 'WR', or 'TE'
+        season (int): The season of the game log you are trying to retrieve
+
+    Returns:
+        [pd.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html): Each game is a row in the DataFrame
+        
+    """
     # make request to find proper href
     r1 = make_request_list(player, position, season)
     player_list = get_soup(r1)

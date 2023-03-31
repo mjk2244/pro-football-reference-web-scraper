@@ -140,6 +140,20 @@ cities = {
 
 # function that returns a team's game log in a given season
 def get_team_game_log(team: str, season: int) -> pd.DataFrame:
+    """A function to retrieve a team's game log in a given season.
+
+    This function returns a pandas DataFrame of a NFL team's game log in a given season, including relevant team-level statistics.
+
+    Args:
+        team (:obj: `str`): A team in the NFL, as the name appears on [Pro Football Reference](https://www.pro-football-reference.com/)
+        season (int): The season of the game log you are trying to retrieve
+
+    Returns:
+        [pd.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html): Each game is a row in the DataFrame 
+          
+    """
+
+
     # make HTTP request and extract HTML
     r = make_request(team, season)
 
