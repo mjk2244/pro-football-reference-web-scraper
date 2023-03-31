@@ -12,12 +12,12 @@ def get_player_game_log(player: str, position: str, season: int) -> pd.DataFrame
     Returns a pandas DataFrame of a NFL player's game log in a given season, including position-specific statistics.
 
     Args:
-        player (:obj: `str`): A NFL player's full name, as it appears on [PFR](https://pro-football-reference.com/)
-        position (:obj: `str`): The position the player plays. Must be 'QB', 'RB', 'WR', or 'TE'
+        player (str): A NFL player's full name, as it appears on Pro Football Reference
+        position (str): The position the player plays. Must be 'QB', 'RB', 'WR', or 'TE'
         season (int): The season of the game log you are trying to retrieve
 
     Returns:
-        [pd.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html): Each game is a row
+        pandas.DataFrame: Each game is a row
 
     """
     # make request to find proper href
