@@ -1,3 +1,15 @@
+import sphinx_rtd_theme
+from recommonmark.transform import AutoStructify
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../pro_football_reference_web_scraper'))
+
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+        'auto_toc_tree_section': 'Contents',
+    }, True)
+    app.add_transform(AutoStructify)
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -25,18 +37,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-import sphinx_rtd_theme
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 html_static_path = ['_static']
-
-from recommonmark.transform import AutoStructify
-
-def setup(app):
-    app.add_config_value('recommonmark_config', {
-        'auto_toc_tree_section': 'Contents',
-    }, True)
-    app.add_transform(AutoStructify)
 
 # Napoleon settings
 napoleon_google_docstring = True

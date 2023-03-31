@@ -145,11 +145,11 @@ def get_team_game_log(team: str, season: int) -> pd.DataFrame:
     Returns a pandas DataFrame of a NFL team's game log in a given season, including relevant team-level statistics.
 
     Args:
-        team (:obj: `str`): A NFL team's name, as it appears on [PFR](https://www.pro-football-reference.com/)
+        team (str): A NFL team's name, as it appears on Pro Football Reference
         season (int): The season of the game log you are trying to retrieve
 
     Returns:
-        [pd.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html): Each game is a row
+        pandas.DataFrame: Each game is a row
 
     """
 
