@@ -11,8 +11,8 @@ name = "pro-football_reference_web_scraper"
 authors = [{name = "Matthew Kim", email = "mjk2244@columbia.edu"}]
 description="Stats web scraper of Pro Football Reference"
 readme = "README.md"
-version = "0.1.0"
-requires-python = ">=3.7"
+version = "0.1.1"
+requires-python = ">=3.8"
 
 dependencies = ["beautifulsoup4>=4.9.0",
                 "requests>=2.28.2",

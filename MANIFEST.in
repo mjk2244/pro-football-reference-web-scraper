@@ -7,6 +7,7 @@ include *.py
 include .bumpversion.cfg
 include pyproject.toml
 include Makefile
+include docs/requirements.txt
 
 recursive-include tests *.py
 recursive-include docs *.bat
@@ -14,7 +15,6 @@ recursive-include docs *.md
 recursive-include docs *.py
 recursive-include docs *.rst
 recursive-include docs Makefile
-recursive-include docs *.txt
 
 prune .github
 exclude .gitignore
