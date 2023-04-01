@@ -1,1 +1,1 @@
-pro_football_reference_web_scraper == 0.1.0
+pro_football_reference_web_scraper==0.1.1
