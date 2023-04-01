@@ -1,3 +1,5 @@
+TMPREPO=/tmp/docs/bt
+
 #########
 # BUILD #
 #########
@@ -39,6 +41,20 @@ checks: check
 
 annotate:  ## run type checking
 	python -m mypy pro_football_reference_web_scraper
+
+docs: 
+	$(MAKE) -C docs/ clean
+	$(MAKE) -C docs/ html
+
+pages: 
+	rm -rf $(TMPREPO)
+	git clone -b gh-pages https://github.com/mjk2244/pro-football-reference-web-scraper.git $(TMPREPO)
+	rm -rf $(TMPREPO)/*
+	cp -r docs/_build/html/* $(TMPREPO)
+	cd $(TMPREPO);\
+	git add -A ;\
+	git commit -a -m 'auto-updating docs' ;\
+	git push
 
 #########
 # TESTS #
