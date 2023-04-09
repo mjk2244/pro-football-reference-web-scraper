@@ -1,3 +1,4 @@
+import pytest
 from pro_football_reference_web_scraper import player_game_log as p
 
 
@@ -12,3 +13,15 @@ class TestClass:
 
         # Stefon Diggs had 1429 receiving yards in 2022
         assert p.get_player_game_log('Stefon Diggs', 'WR', 2022)['Rec_Yds'].sum() == 1429
+
+        # improper position formatting
+        with pytest.raises(Exception):
+            p.get_player_game_log('Patrick Mahomes', 'Quarterback', 2022)
+
+        # player with wrong position
+        with pytest.raises(Exception):
+            p.get_player_game_log('Patrick Mahomes', 'RB', 2022)
+
+        # player in wrong season
+        with pytest.raises(Exception):
+            p.get_player_game_log('Patrick Mahomes', 'QB', 2016)

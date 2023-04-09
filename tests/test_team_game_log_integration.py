@@ -1,4 +1,5 @@
 from pro_football_reference_web_scraper import team_game_log as t
+import pytest
 
 
 class TestClass:
@@ -18,3 +19,11 @@ class TestClass:
                 w += 1
         # the Bills won 13 games in 2022
         assert w == 13
+
+        # misspelled team name
+        with pytest.raises(Exception):
+            t.get_team_game_log('Bufalo Bills', 2022)
+
+        # invalid team-season combo
+        with pytest.raises(Exception):
+            t.get_team_game_log('Houston Texans', 2000)

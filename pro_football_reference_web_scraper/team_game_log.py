@@ -50,11 +50,13 @@ team_hrefs = {
     'Oakland Raiders': 'rai',
     'San Diego Chargers': 'sdg',
     'St. Louis Rams': 'ram',
+    'Boston Patriots': 'nwe',
 }
 
 months = {"September": 9, "October": 10, "November": 11, "December": 12, "January": 1}
 
 locations = {
+    'Boston': {'latitude': 42.3656, 'longitude': 71.0096, 'airport': 'BOS'},
     'Phoenix': {'latitude': 33.4352, 'longitude': 112.0101, 'airport': 'PHX'},
     'Chicago': {'latitude': 41.9803, 'longitude': 87.9090, 'airport': 'ORD'},
     'Green Bay': {'latitude': 44.4923, 'longitude': 88.1278, 'airport': 'GRB'},
@@ -134,7 +136,7 @@ cities = {
     'St. Louis Rams': 'St. Louis',
     'Baltimore Colts': 'Baltimore',
     'St. Louis Cardinals': 'St. Louis',
-    # 'Boston Patriots': 'Boston' add Boston to locations dictionary
+    'Boston Patriots': 'Boston',
 }
 
 
@@ -149,12 +151,19 @@ def get_team_game_log(team: str, season: int) -> pd.DataFrame:
         season (int): The season of the game log you are trying to retrieve
 
     Returns:
-        pandas.DataFrame: Each game is a row
+        pandas.DataFrame: Each game is a row of the DataFrame
 
     """
 
+    # raise exception if team name is misspelled
+    if team not in team_hrefs.keys():
+        raise Exception('Invalid team name. Note: spelling is case sensitive')
+
     # make HTTP request and extract HTML
     r = make_request(team, season)
+
+    if r.status_code == 404:
+        raise Exception('404 error. The ' + team + ' may not have existed in ' + str(season))
 
     # parse HTML using BeautifulSoup
     soup = get_soup(r)
