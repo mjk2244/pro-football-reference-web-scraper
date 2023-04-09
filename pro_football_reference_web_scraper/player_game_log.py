@@ -2,6 +2,8 @@ import pandas as pd  # type: ignore
 from bs4 import BeautifulSoup
 import requests
 
+valid_positions = ['QB', 'RB', 'WR', 'TE']
+
 
 # function that returns a player's game log in a given season
 # player: player's full name (e.g. Tom Brady)
@@ -17,9 +19,14 @@ def get_player_game_log(player: str, position: str, season: int) -> pd.DataFrame
         season (int): The season of the game log you are trying to retrieve
 
     Returns:
-        pandas.DataFrame: Each game is a row
+        pandas.DataFrame: Each game is a row of the DataFrame
 
     """
+
+    # position arg must be formatted properly
+    if position not in valid_positions:
+        raise Exception('Invalid position: "position" arg must be "QB", "RB", "WR", or "TE"')
+
     # make request to find proper href
     r1 = make_request_list(player, position, season)
     player_list = get_soup(r1)
@@ -49,8 +56,8 @@ def get_href(player: str, position: str, season: int, player_list: BeautifulSoup
         seasons = p.text.split(' ')
         seasons = seasons[len(seasons) - 1].split('-')
         if season >= int(seasons[0]) and season <= int(seasons[1]) and player in p.text and position in p.text:
-            href = p.find('a').get('href')
-    return href
+            return p.find('a').get('href')
+    raise Exception('Cannot find a ' + position + ' named ' + player + ' from ' + str(season))
 
 
 # helper function that makes a HTTP request over a list of players with a given last initial
