@@ -48,7 +48,6 @@ def win_loss(player: str, position: str, season: int, avg=True) -> pd.DataFrame:
     """
 
     game_log = p.get_player_game_log(player, position, season)
-    game_log = format_game_log(game_log)
 
     if avg:
         return splits_averages(game_log, 'result')
@@ -57,7 +56,7 @@ def win_loss(player: str, position: str, season: int, avg=True) -> pd.DataFrame:
         # doesn't make sense to sum snap pct
         if position == 'WR' or position == 'TE':
             game_log = game_log.drop('snap_pct', axis=1)
-        return splits_sum(game_log, 'game_location')
+        return splits_sum(game_log, 'result')
 
 
 # helper function to properly format game log for grouping
@@ -78,8 +77,8 @@ def splits_sum(game_log: pd.DataFrame, grouping: str):
 
 
 def main():
-    print(home_road('Davante Adams', 'WR', 2021, False))
-    print(win_loss('Davante Adams', 'WR', 2021, False))
+    print(home_road('Justin Herbert', 'QB', 2022, False))
+    # print(win_loss('Justin Herbert', 'QB', 2022, False))
 
 
 if __name__ == '__main__':

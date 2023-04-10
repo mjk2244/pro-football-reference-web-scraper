@@ -22,7 +22,7 @@ class TestClass:
         position = 'QB'
         season = 2022
         # Justin Herbert averaged 40.6 pass attempts in wins in 2022
-        assert p.win_loss(player, position, season, avg=True)['pass_att'][1] == 40.6
+        assert p.win_loss(player, position, season, avg=True)['att'][1] == 40.6
 
         # Justin Herbert threw for 12 touchdowns in losses in 2022
         assert p.win_loss(player, position, season, avg=False)['pass_td'][0] == 12
