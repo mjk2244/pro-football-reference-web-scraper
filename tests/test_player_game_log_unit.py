@@ -48,22 +48,24 @@ class TestClass:
         # fake dataframe to check with returned dataframe
         fake_df = pd.DataFrame(
             {
-                "Date": ["2022-09-11"],
-                "Week": [1],
-                "Team": ["TAM"],
-                "Game_Location": ["@"],
-                "Opp": ["DAL"],
-                "Result": ["W 19-3"],
-                "Cmp": [18],
-                "Att": [27],
-                "Pass_Yds": [212],
-                "Pass_TD": [1],
-                "Int": [1],
-                "Rating": [87.3],
-                "Sacked": [2],
-                "Rush_Att": [1],
-                "Rush_Yds": [1],
-                "Rush_TD": [1],
+                "date": ["2022-09-11"],
+                "week": [1],
+                "team": ["TAM"],
+                "game_location": ["@"],
+                "opp": ["DAL"],
+                "result": ["W"],
+                "team_pts": [19],
+                "opp_pts": [3],
+                "cmp": [18],
+                "att": [27],
+                "pass_yds": [212],
+                "pass_td": [1],
+                "int": [1],
+                "rating": [87.3],
+                "sacked": [2],
+                "rush_att": [1],
+                "rush_yds": [1],
+                "rush_td": [1],
             }
         )
         # asserting that the returned dataframe is expected
@@ -82,18 +84,20 @@ class TestClass:
         # fake dataframe to check with returned dataframe
         fake_df = pd.DataFrame(
             {
-                "Date": ["2022-09-11"],
-                "Week": [1],
-                "Team": ["TAM"],
-                "Game_Location": ["@"],
-                "Opp": ["DAL"],
-                "Result": ["W 19-3"],
-                "Rush_Att": [18],
-                "Rush_Yds": [27],
-                "Rush_TD": [212],
-                "Tgt": [1],
-                "Rec_Yds": [1],
-                "Rec_TD": [1],
+                "date": ["2022-09-11"],
+                "week": [1],
+                "team": ["TAM"],
+                "game_location": ["@"],
+                "opp": ["DAL"],
+                "result": ["W"],
+                "team_pts": [19],
+                "opp_pts": [3],
+                "rush_att": [18],
+                "rush_yds": [27],
+                "rush_td": [212],
+                "tgt": [1],
+                "rec_yds": [1],
+                "rec_td": [1],
             }
         )
 
@@ -112,17 +116,19 @@ class TestClass:
         # fake dataframe to check with returned dataframe
         fake_df = pd.DataFrame(
             {
-                "Date": ["2022-09-11"],
-                "Week": [1],
-                "Team": ["TAM"],
-                "Game_Location": ["@"],
-                "Opp": ["DAL"],
-                "Result": ["W 19-3"],
-                "Tgt": [18],
-                "Rec": [27],
-                "Rec_Yds": [212],
-                "Rec_TD": [1],
-                "Snap_Pct": [0.87],
+                "date": ["2022-09-11"],
+                "week": [1],
+                "team": ["TAM"],
+                "game_location": ["@"],
+                "opp": ["DAL"],
+                "result": ["W"],
+                "team_pts": [19],
+                "opp_pts": [3],
+                "tgt": [18],
+                "rec": [27],
+                "rec_yds": [212],
+                "rec_td": [1],
+                "snap_pct": [0.87],
             }
         )
 
