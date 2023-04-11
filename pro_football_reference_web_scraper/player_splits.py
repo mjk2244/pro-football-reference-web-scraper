@@ -48,6 +48,7 @@ def win_loss(player: str, position: str, season: int, avg=True) -> pd.DataFrame:
     """
 
     game_log = p.get_player_game_log(player, position, season)
+    game_log = format_game_log(game_log)
 
     if avg:
         return splits_averages(game_log, 'result')
@@ -69,17 +70,16 @@ def format_game_log(game_log: pd.DataFrame) -> pd.DataFrame:
 
 # helper function to group a game log and return its averages
 def splits_averages(game_log: pd.DataFrame, grouping: str):
-    return game_log.groupby(grouping).mean(numeric_only=True)
+    # count number of games for each split
+    counts = game_log.groupby(grouping).size().to_frame('games')
+    game_log = game_log.groupby(grouping).mean(numeric_only=True)
+    game_log.insert(0, 'games', counts['games'])
+    return game_log.iloc[::-1]
 
 
 def splits_sum(game_log: pd.DataFrame, grouping: str):
-    return game_log.groupby(grouping).sum(numeric_only=True)
-
-
-def main():
-    print(home_road('Justin Herbert', 'QB', 2022, False))
-    # print(win_loss('Justin Herbert', 'QB', 2022, False))
-
-
-if __name__ == '__main__':
-    main()
+    # count number of games for each split
+    counts = game_log.groupby(grouping).size().to_frame('games')
+    game_log = game_log.groupby(grouping).sum(numeric_only=True)
+    game_log.insert(0, 'games', counts['games'])
+    return game_log.iloc[::-1]

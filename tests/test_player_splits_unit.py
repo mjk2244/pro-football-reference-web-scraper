@@ -20,13 +20,17 @@ class TestClass:
         fake_data = {'team': ['A', 'A', 'B'], 'points': [100, 200, 300]}
         fake_df = pd.DataFrame(fake_data)
 
-        # team A has an average of 150
-        assert p.splits_averages(fake_df, grouping='team')['points'][0] == 150
+        # team A has an average of 150 points and played in 2 games
+        result = p.splits_averages(fake_df, grouping='team')
+        assert result['points']['A'] == 150
+        assert result['games']['A'] == 2
 
     def test_splits_sum(self):
         # create a fake DataFrame
         fake_data = {'team': ['A', 'A', 'B'], 'points': [100, 200, 300]}
         fake_df = pd.DataFrame(fake_data)
 
-        # team A has a total of 300 points
-        assert p.splits_sum(fake_df, grouping='team')['points'][0] == 300
+        # team A has a total of 300 points and played in 2 games
+        result = p.splits_sum(fake_df, grouping='team')
+        assert result['points']['A'] == 300
+        assert result['games']['A'] == 2
