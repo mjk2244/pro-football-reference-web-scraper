@@ -11,7 +11,7 @@ def home_road(player: str, position: str, season: int, avg=True) -> pd.DataFrame
         player (str): A NFL player's full name, as it appears on Pro Football Reference
         position (str): The position the player plays. Must be 'QB', 'RB', 'WR', or 'TE'
         season (int): The season of the stats you are trying to retrieve
-        avg (bool): Whether you want the stats as averages or sums
+        avg (bool): Whether you want the stats as averages or sums (default = True)
 
     Returns:
         pandas.DataFrame: A pandas DataFrame of a player's home-road splits
