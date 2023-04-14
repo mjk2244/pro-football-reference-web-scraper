@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Splits &mdash; pro-football-reference-web-scraper 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="CONTRIBUTING.html" />
+    <link rel="prev" title="Player Splits" href="player_splits.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pro-football-reference-web-scraper
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">Quick Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_player_game_log.html">Getting a Player’s Game Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_team_game_log.html">Getting a Team’s Game Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_splits.html">Player Splits</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Team Splits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#home-road-splits">Home-Road Splits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#averages">Averages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sums">Sums</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#win-loss-splits">Win-Loss Splits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Averages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Sums</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/modules.html">pro_football_reference_web_scraper</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pro-football-reference-web-scraper</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Team Splits</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/team_splits.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="team-splits">
+<h1>Team Splits<a class="headerlink" href="#team-splits" title="Permalink to this heading">¶</a></h1>
+<p>In order to retrieve a team’s splits in a given season, you will first need to know the name of the team you are interested in. The spelling of the team’s name must exactly match its spelling on <a class="reference external" href="https://www.pro-football-reference.com/">Pro Football Reference</a>. You will also need to specify the season you are interested in, as well as if you want the stats as averages or sums.</p>
+<section id="home-road-splits">
+<h2>Home-Road Splits<a class="headerlink" href="#home-road-splits" title="Permalink to this heading">¶</a></h2>
+<p>You can retrieve a team’s stats in home vs. road games either as averages or sums.</p>
+<section id="averages">
+<h3>Averages<a class="headerlink" href="#averages" title="Permalink to this heading">¶</a></h3>
+<p>The following code will output the Philadelphia Eagles stats in home vs. road games in the 2018 season as averages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ‘team’ parameter is case sensitive. ‘Philadelphia eagles’ will not work, but ‘Philadelphia Ealges’ will.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span> <span class="nn">pro_football_reference_web_scraper</span> <span class="kn">import</span> <span class="n">team_splits</span> <span class="k">as</span> <span class="n">t</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">home_road</span><span class="p">(</span><span class="n">team</span> <span class="o">=</span> <span class="s1">&#39;Philadelphia Eagles&#39;</span><span class="p">,</span> <span class="n">season</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">avg</span> <span class="o">=</span> <span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="o">|</span> <span class="n">game_location</span>   <span class="o">|</span>   <span class="n">games</span> <span class="o">|</span>   <span class="n">wins</span> <span class="o">|</span>   <span class="n">ties</span> <span class="o">|</span>   <span class="n">losses</span> <span class="o">|</span>   <span class="n">points_for</span> <span class="o">|</span>   <span class="n">points_allowed</span> <span class="o">|</span>   <span class="n">tot_yds</span> <span class="o">|</span>   <span class="n">pass_yds</span> <span class="o">|</span>   <span class="n">rush_yds</span> <span class="o">|</span>   <span class="n">opp_tot_yds</span> <span class="o">|</span>   <span class="n">opp_pass_yds</span> <span class="o">|</span>   <span class="n">opp_rush_yds</span> <span class="o">|</span>
+<span class="o">|</span><span class="p">:</span><span class="o">----------------|--------</span><span class="p">:</span><span class="o">|-------</span><span class="p">:</span><span class="o">|-------</span><span class="p">:</span><span class="o">|---------</span><span class="p">:</span><span class="o">|-------------</span><span class="p">:</span><span class="o">|-----------------</span><span class="p">:</span><span class="o">|----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|--------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">home</span>            <span class="o">|</span>       <span class="mi">8</span> <span class="o">|</span>      <span class="mi">5</span> <span class="o">|</span>      <span class="mi">0</span> <span class="o">|</span>        <span class="mi">3</span> <span class="o">|</span>       <span class="mf">22.625</span> <span class="o">|</span>             <span class="mf">20.5</span> <span class="o">|</span>   <span class="mf">379.25</span>  <span class="o">|</span>    <span class="mf">280.625</span> <span class="o">|</span>     <span class="mf">98.625</span> <span class="o">|</span>       <span class="mi">334</span>     <span class="o">|</span>        <span class="mf">233.625</span> <span class="o">|</span>        <span class="mf">100.375</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">away</span>            <span class="o">|</span>       <span class="mi">8</span> <span class="o">|</span>      <span class="mi">4</span> <span class="o">|</span>      <span class="mi">0</span> <span class="o">|</span>        <span class="mi">4</span> <span class="o">|</span>       <span class="mf">23.25</span>  <span class="o">|</span>             <span class="mi">23</span>   <span class="o">|</span>   <span class="mf">351.375</span> <span class="o">|</span>    <span class="mf">253.75</span>  <span class="o">|</span>     <span class="mf">97.625</span> <span class="o">|</span>       <span class="mf">398.375</span> <span class="o">|</span>        <span class="mf">304.875</span> <span class="o">|</span>         <span class="mf">93.5</span>   <span class="o">|</span>
+</pre></div>
+</div>
+</section>
+<section id="sums">
+<h3>Sums<a class="headerlink" href="#sums" title="Permalink to this heading">¶</a></h3>
+<p>The following code will output the Philadelphia Eagles stats in home vs. road games in the 2018 season as sums.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ‘team’ parameter is case sensitive. ‘Philadelphia eagles’ will not work, but ‘Philadelphia Ealges’ will.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span> <span class="nn">pro_football_reference_web_scraper</span> <span class="kn">import</span> <span class="n">team_splits</span> <span class="k">as</span> <span class="n">t</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">home_road</span><span class="p">(</span><span class="n">team</span> <span class="o">=</span> <span class="s1">&#39;Philadelphia Eagles&#39;</span><span class="p">,</span> <span class="n">season</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">avg</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="o">|</span> <span class="n">game_location</span>   <span class="o">|</span>   <span class="n">games</span> <span class="o">|</span>   <span class="n">wins</span> <span class="o">|</span>   <span class="n">ties</span> <span class="o">|</span>   <span class="n">losses</span> <span class="o">|</span>   <span class="n">points_for</span> <span class="o">|</span>   <span class="n">points_allowed</span> <span class="o">|</span>   <span class="n">tot_yds</span> <span class="o">|</span>   <span class="n">pass_yds</span> <span class="o">|</span>   <span class="n">rush_yds</span> <span class="o">|</span>   <span class="n">opp_tot_yds</span> <span class="o">|</span>   <span class="n">opp_pass_yds</span> <span class="o">|</span>   <span class="n">opp_rush_yds</span> <span class="o">|</span>
+<span class="o">|</span><span class="p">:</span><span class="o">----------------|--------</span><span class="p">:</span><span class="o">|-------</span><span class="p">:</span><span class="o">|-------</span><span class="p">:</span><span class="o">|---------</span><span class="p">:</span><span class="o">|-------------</span><span class="p">:</span><span class="o">|-----------------</span><span class="p">:</span><span class="o">|----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|--------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">home</span>            <span class="o">|</span>       <span class="mi">8</span> <span class="o">|</span>      <span class="mi">5</span> <span class="o">|</span>      <span class="mi">0</span> <span class="o">|</span>        <span class="mi">3</span> <span class="o">|</span>          <span class="mi">181</span> <span class="o">|</span>              <span class="mi">164</span> <span class="o">|</span>      <span class="mi">3034</span> <span class="o">|</span>       <span class="mi">2245</span> <span class="o">|</span>        <span class="mi">789</span> <span class="o">|</span>          <span class="mi">2672</span> <span class="o">|</span>           <span class="mi">1869</span> <span class="o">|</span>            <span class="mi">803</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">away</span>            <span class="o">|</span>       <span class="mi">8</span> <span class="o">|</span>      <span class="mi">4</span> <span class="o">|</span>      <span class="mi">0</span> <span class="o">|</span>        <span class="mi">4</span> <span class="o">|</span>          <span class="mi">186</span> <span class="o">|</span>              <span class="mi">184</span> <span class="o">|</span>      <span class="mi">2811</span> <span class="o">|</span>       <span class="mi">2030</span> <span class="o">|</span>        <span class="mi">781</span> <span class="o">|</span>          <span class="mi">3187</span> <span class="o">|</span>           <span class="mi">2439</span> <span class="o">|</span>            <span class="mi">748</span> <span class="o">|</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="win-loss-splits">
+<h2>Win-Loss Splits<a class="headerlink" href="#win-loss-splits" title="Permalink to this heading">¶</a></h2>
+<p>You can also retrieve a team’s stats in wins vs. losses either as averages or sums.</p>
+<section id="id1">
+<h3>Averages<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p>The following code will output the Philadelphia Eagles stats in wins vs. losses games in the 2018 season as averages.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ‘team’ parameter is case sensitive. ‘Philadelphia eagles’ will not work, but ‘Philadelphia Ealges’ will.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span> <span class="nn">pro_football_reference_web_scraper</span> <span class="kn">import</span> <span class="n">team_splits</span> <span class="k">as</span> <span class="n">t</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">win_loss</span><span class="p">(</span><span class="n">team</span> <span class="o">=</span> <span class="s1">&#39;Philadelphia Eagles&#39;</span><span class="p">,</span> <span class="n">season</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">avg</span> <span class="o">=</span> <span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="o">|</span> <span class="n">result</span>   <span class="o">|</span>   <span class="n">games</span> <span class="o">|</span>   <span class="n">points_for</span> <span class="o">|</span>   <span class="n">points_allowed</span> <span class="o">|</span>   <span class="n">tot_yds</span> <span class="o">|</span>   <span class="n">pass_yds</span> <span class="o">|</span>   <span class="n">rush_yds</span> <span class="o">|</span>   <span class="n">opp_tot_yds</span> <span class="o">|</span>   <span class="n">opp_pass_yds</span> <span class="o">|</span>   <span class="n">opp_rush_yds</span> <span class="o">|</span>
+<span class="o">|</span><span class="p">:</span><span class="o">---------|--------</span><span class="p">:</span><span class="o">|-------------</span><span class="p">:</span><span class="o">|-----------------</span><span class="p">:</span><span class="o">|----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|--------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">W</span>        <span class="o">|</span>       <span class="mi">9</span> <span class="o">|</span>      <span class="mf">26.1111</span> <span class="o">|</span>          <span class="mf">16.3333</span> <span class="o">|</span>   <span class="mf">380.222</span> <span class="o">|</span>    <span class="mf">262.444</span> <span class="o">|</span>   <span class="mf">117.778</span>  <span class="o">|</span>       <span class="mf">305.333</span> <span class="o">|</span>        <span class="mf">221.556</span> <span class="o">|</span>        <span class="mf">83.7778</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">L</span>        <span class="o">|</span>       <span class="mi">7</span> <span class="o">|</span>      <span class="mf">18.8571</span> <span class="o">|</span>          <span class="mf">28.7143</span> <span class="o">|</span>   <span class="mf">346.143</span> <span class="o">|</span>    <span class="mf">273.286</span> <span class="o">|</span>    <span class="mf">72.8571</span> <span class="o">|</span>       <span class="mf">444.429</span> <span class="o">|</span>        <span class="mf">330.571</span> <span class="o">|</span>       <span class="mf">113.857</span>  <span class="o">|</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Sums<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>The following code will output the Philadelphia Eagles stats in wins vs. lossees in the 2018 season as sums.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ‘team’ parameter is case sensitive. ‘Philadelphia eagles’ will not work, but ‘Philadelphia Ealges’ will.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">from</span> <span class="nn">pro_football_reference_web_scraper</span> <span class="kn">import</span> <span class="n">team_splits</span> <span class="k">as</span> <span class="n">t</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">win_loss</span><span class="p">(</span><span class="n">team</span> <span class="o">=</span> <span class="s1">&#39;Philadelphia Eagles&#39;</span><span class="p">,</span> <span class="n">season</span> <span class="o">=</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">avg</span> <span class="o">=</span> <span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="o">|</span> <span class="n">result</span>   <span class="o">|</span>   <span class="n">games</span> <span class="o">|</span>   <span class="n">points_for</span> <span class="o">|</span>   <span class="n">points_allowed</span> <span class="o">|</span>   <span class="n">tot_yds</span> <span class="o">|</span>   <span class="n">pass_yds</span> <span class="o">|</span>   <span class="n">rush_yds</span> <span class="o">|</span>   <span class="n">opp_tot_yds</span> <span class="o">|</span>   <span class="n">opp_pass_yds</span> <span class="o">|</span>   <span class="n">opp_rush_yds</span> <span class="o">|</span>
+<span class="o">|</span><span class="p">:</span><span class="o">---------|--------</span><span class="p">:</span><span class="o">|-------------</span><span class="p">:</span><span class="o">|-----------------</span><span class="p">:</span><span class="o">|----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|-----------</span><span class="p">:</span><span class="o">|--------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|---------------</span><span class="p">:</span><span class="o">|</span>
+<span class="o">|</span> <span class="n">W</span>        <span class="o">|</span>       <span class="mi">9</span> <span class="o">|</span>          <span class="mi">235</span> <span class="o">|</span>              <span class="mi">147</span> <span class="o">|</span>      <span class="mi">3422</span> <span class="o">|</span>       <span class="mi">2362</span> <span class="o">|</span>       <span class="mi">1060</span> <span class="o">|</span>          <span class="mi">2748</span> <span class="o">|</span>           <span class="mi">1994</span> <span class="o">|</span>            <span class="mi">754</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">L</span>        <span class="o">|</span>       <span class="mi">7</span> <span class="o">|</span>          <span class="mi">132</span> <span class="o">|</span>              <span class="mi">201</span> <span class="o">|</span>      <span class="mi">2423</span> <span class="o">|</span>       <span class="mi">1913</span> <span class="o">|</span>        <span class="mi">510</span> <span class="o">|</span>          <span class="mi">3111</span> <span class="o">|</span>           <span class="mi">2314</span> <span class="o">|</span>            <span class="mi">797</span> <span class="o">|</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="player_splits.html" class="btn btn-neutral float-left" title="Player Splits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CONTRIBUTING.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Matthew Kim.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
