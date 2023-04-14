@@ -137,8 +137,3 @@ def splits_sum(game_log: pd.DataFrame, grouping: str) -> pd.DataFrame:
     game_log.insert(0, 'games', counts['games'])
 
     return game_log.iloc[::-1]
-
-def main():
-    home_road(team = 'Philadelphia Eagles', season = 2022, avg = True).to_markdown('test.txt')
-
-if __name__ == '__main__': main()

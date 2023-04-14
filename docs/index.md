@@ -13,6 +13,8 @@ pro-football-reference-web-scraper is a Python library that helps developers tak
    README.md
    get_player_game_log.md
    get_team_game_log.md
+   player_splits.md
+   team_splits.md
    CONTRIBUTING.md
    source/modules
 
