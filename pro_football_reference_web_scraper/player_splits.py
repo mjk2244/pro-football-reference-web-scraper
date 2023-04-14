@@ -19,7 +19,7 @@ def home_road(player: str, position: str, season: int, avg=True) -> pd.DataFrame
     """
 
     game_log = p.get_player_game_log(player, position, season)
-    game_log = format_game_log(game_log)
+    game_log = format_game_log(game_log)  # get rid of extraneous stats
 
     if avg:
         return splits_averages(game_log, 'game_location')
