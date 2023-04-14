@@ -10,9 +10,10 @@ class TestClass:
         player = 'Davante Adams'
         position = 'WR'
         season = 2022
+        splits = p.home_road(player, position, season, avg=False)
         # Davante Adams had 8 TDs in road games and 6 TDs in home games in 2022
-        assert p.home_road(player, position, season, avg=False)['rec_td']['away'] == 8
-        assert p.home_road(player, position, season, avg=False)['rec_td']['home'] == 6
+        assert splits['rec_td']['away'] == 8
+        assert splits['rec_td']['home'] == 6
 
         # Davante Adams averaged 6.5 receptions/game in home games in 2022
         assert p.home_road(player, position, season, avg=True)['rec']['home'] == 6.5

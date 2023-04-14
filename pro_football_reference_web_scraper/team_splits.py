@@ -137,5 +137,3 @@ def splits_sum(game_log: pd.DataFrame, grouping: str) -> pd.DataFrame:
     game_log.insert(0, 'games', counts['games'])
 
     return game_log.iloc[::-1]
-
-    return game_log.iloc[::-1]
