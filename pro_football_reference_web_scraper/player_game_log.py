@@ -2,6 +2,8 @@ import pandas as pd  # type: ignore
 from bs4 import BeautifulSoup
 import requests
 
+valid_positions = ['QB', 'RB', 'WR', 'TE']
+
 
 # function that returns a player's game log in a given season
 # player: player's full name (e.g. Tom Brady)
@@ -17,9 +19,14 @@ def get_player_game_log(player: str, position: str, season: int) -> pd.DataFrame
         season (int): The season of the game log you are trying to retrieve
 
     Returns:
-        pandas.DataFrame: Each game is a row
+        pandas.DataFrame: Each game is a row of the DataFrame
 
     """
+
+    # position arg must be formatted properly
+    if position not in valid_positions:
+        raise Exception('Invalid position: "position" arg must be "QB", "RB", "WR", or "TE"')
+
     # make request to find proper href
     r1 = make_request_list(player, position, season)
     player_list = get_soup(r1)
@@ -49,8 +56,8 @@ def get_href(player: str, position: str, season: int, player_list: BeautifulSoup
         seasons = p.text.split(' ')
         seasons = seasons[len(seasons) - 1].split('-')
         if season >= int(seasons[0]) and season <= int(seasons[1]) and player in p.text and position in p.text:
-            href = p.find('a').get('href')
-    return href
+            return p.find('a').get('href')
+    raise Exception('Cannot find a ' + position + ' named ' + player + ' from ' + str(season))
 
 
 # helper function that makes a HTTP request over a list of players with a given last initial
@@ -76,22 +83,24 @@ def get_soup(request):
 def qb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # Most relevant QB stats, in my opinion. Could adjust if necessary
     data = {
-        'Date': [],
-        'Week': [],
-        'Team': [],
-        'Game_Location': [],
-        'Opp': [],
-        'Result': [],
-        'Cmp': [],
-        'Att': [],
-        'Pass_Yds': [],
-        'Pass_TD': [],
-        'Int': [],
-        'Rating': [],
-        'Sacked': [],
-        'Rush_Att': [],
-        'Rush_Yds': [],
-        'Rush_TD': [],
+        'date': [],
+        'week': [],
+        'team': [],
+        'game_location': [],
+        'opp': [],
+        'result': [],
+        'team_pts': [],
+        'opp_pts': [],
+        'cmp': [],
+        'att': [],
+        'pass_yds': [],
+        'pass_td': [],
+        'int': [],
+        'rating': [],
+        'sacked': [],
+        'rush_att': [],
+        'rush_yds': [],
+        'rush_td': [],
     }  # type: dict
 
     table_rows = soup.find('tbody').find_all('tr')
@@ -106,22 +115,28 @@ def qb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # adding data to data dictionary
     for i in range(len(table_rows)):
         if i not in to_ignore:
-            data['Date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
-            data['Week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
-            data['Team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
-            data['Game_Location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
-            data['Opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
-            data['Result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text)
-            data['Cmp'].append(int(table_rows[i].find('td', {'data-stat': 'pass_cmp'}).text))
-            data['Att'].append(int(table_rows[i].find('td', {'data-stat': 'pass_att'}).text))
-            data['Pass_Yds'].append(int(table_rows[i].find('td', {'data-stat': 'pass_yds'}).text))
-            data['Pass_TD'].append(int(table_rows[i].find('td', {'data-stat': 'pass_td'}).text))
-            data['Int'].append(int(table_rows[i].find('td', {'data-stat': 'pass_int'}).text))
-            data['Rating'].append(float(table_rows[i].find('td', {'data-stat': 'pass_rating'}).text))
-            data['Sacked'].append(int(table_rows[i].find('td', {'data-stat': 'pass_sacked'}).text))
-            data['Rush_Att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
-            data['Rush_Yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
-            data['Rush_TD'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
+            data['date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
+            data['week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
+            data['team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
+            data['game_location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
+            data['opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
+            data['result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[0])
+            data['team_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[0])
+            )
+            data['opp_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
+            )
+            data['cmp'].append(int(table_rows[i].find('td', {'data-stat': 'pass_cmp'}).text))
+            data['att'].append(int(table_rows[i].find('td', {'data-stat': 'pass_att'}).text))
+            data['pass_yds'].append(int(table_rows[i].find('td', {'data-stat': 'pass_yds'}).text))
+            data['pass_td'].append(int(table_rows[i].find('td', {'data-stat': 'pass_td'}).text))
+            data['int'].append(int(table_rows[i].find('td', {'data-stat': 'pass_int'}).text))
+            data['rating'].append(float(table_rows[i].find('td', {'data-stat': 'pass_rating'}).text))
+            data['sacked'].append(int(table_rows[i].find('td', {'data-stat': 'pass_sacked'}).text))
+            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
+            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
+            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
 
     return pd.DataFrame(data=data)
 
@@ -132,17 +147,19 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # Could adjust if necessary (maybe figure out how to incorporate rushing stats?)
 
     data = {
-        'Date': [],
-        'Week': [],
-        'Team': [],
-        'Game_Location': [],
-        'Opp': [],
-        'Result': [],
-        'Tgt': [],
-        'Rec': [],
-        'Rec_Yds': [],
-        'Rec_TD': [],
-        'Snap_Pct': [],
+        'date': [],
+        'week': [],
+        'team': [],
+        'game_location': [],
+        'opp': [],
+        'result': [],
+        'team_pts': [],
+        'opp_pts': [],
+        'tgt': [],
+        'rec': [],
+        'rec_yds': [],
+        'rec_td': [],
+        'snap_pct': [],
     }  # type: dict
 
     table_rows = soup.find('tbody').find_all('tr')
@@ -157,17 +174,23 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # adding data to data dictionray
     for i in range(len(table_rows)):
         if i not in to_ignore:
-            data['Date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
-            data['Week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
-            data['Team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
-            data['Game_Location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
-            data['Opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
-            data['Result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text)
-            data['Tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
-            data['Rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
-            data['Rec_Yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
-            data['Rec_TD'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
-            data['Snap_Pct'].append(float(int(table_rows[i].find('td', {'data-stat': 'off_pct'}).text[:-1]) / 100))
+            data['date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
+            data['week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
+            data['team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
+            data['game_location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
+            data['opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
+            data['result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[0])
+            data['team_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[0])
+            )
+            data['opp_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
+            )
+            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
+            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
+            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
+            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
+            data['snap_pct'].append(float(int(table_rows[i].find('td', {'data-stat': 'off_pct'}).text[:-1]) / 100))
 
     return pd.DataFrame(data=data)
 
@@ -175,18 +198,20 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
 def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # Most relevant RB stats, in my opinion. Could adjust if necessary
     data = {
-        'Date': [],
-        'Week': [],
-        'Team': [],
-        'Game_Location': [],
-        'Opp': [],
-        'Result': [],
-        'Rush_Att': [],
-        'Rush_Yds': [],
-        'Rush_TD': [],
-        'Tgt': [],
-        'Rec_Yds': [],
-        'Rec_TD': [],
+        'date': [],
+        'week': [],
+        'team': [],
+        'game_location': [],
+        'opp': [],
+        'result': [],
+        'team_pts': [],
+        'opp_pts': [],
+        'rush_att': [],
+        'rush_yds': [],
+        'rush_td': [],
+        'tgt': [],
+        'rec_yds': [],
+        'rec_td': [],
     }  # type: dict
 
     table_rows = soup.find('tbody').find_all('tr')
@@ -201,17 +226,23 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     # adding data to data dictionary
     for i in range(len(table_rows)):
         if i not in to_ignore:
-            data['Date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
-            data['Week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
-            data['Team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
-            data['Game_Location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
-            data['Opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
-            data['Result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text)
-            data['Rush_Att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
-            data['Rush_Yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
-            data['Rush_TD'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
-            data['Tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
-            data['Rec_Yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
-            data['Rec_TD'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
+            data['date'].append(table_rows[i].find('td', {'data-stat': 'game_date'}).text)
+            data['week'].append(int(table_rows[i].find('td', {'data-stat': 'week_num'}).text))
+            data['team'].append(table_rows[i].find('td', {'data-stat': 'team'}).text)
+            data['game_location'].append(table_rows[i].find('td', {'data-stat': 'game_location'}).text)
+            data['opp'].append(table_rows[i].find('td', {'data-stat': 'opp'}).text)
+            data['result'].append(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[0])
+            data['team_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[0])
+            )
+            data['opp_pts'].append(
+                int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
+            )
+            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
+            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
+            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
+            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
+            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
+            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
 
     return pd.DataFrame(data=data)
