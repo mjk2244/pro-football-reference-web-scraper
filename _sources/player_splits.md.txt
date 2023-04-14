@@ -1,6 +1,6 @@
 # Player Splits
 
-In order to retrieve a player's game log in a given season, you will first need to know the name of the player you are interested in. The spelling of the player's name must exactly match its spelling on [Pro Football Reference](https://www.pro-football-reference.com/). You will also need to specify the season you are interested in, as well as if you want the stats as averages or sums.
+In order to retrieve a player's splits in a given season, you will first need to know the name of the player you are interested in. The spelling of the player's name must exactly match its spelling on [Pro Football Reference](https://www.pro-football-reference.com/). You will also need to specify the season you are interested in, as well as if you want the stats as averages or sums.
 
 ## Home-Road Splits
 
