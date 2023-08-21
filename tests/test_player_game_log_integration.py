@@ -6,7 +6,7 @@ import time
 class TestClass:
     # INTEGRATION TESTS
     def test_get_player_game_log(self):
-        time.sleep(3)
+        time.sleep(5)
         # Tom Brady had 4694 passing yards in 2022
         assert p.get_player_game_log('Tom Brady', 'QB', 2022)['pass_yds'].sum() == 4694
 
@@ -15,6 +15,12 @@ class TestClass:
 
         # Stefon Diggs had 1429 receiving yards in 2022
         assert p.get_player_game_log('Stefon Diggs', 'WR', 2022)['rec_yds'].sum() == 1429
+
+        # Wide Receivers did not have snap pct before 2012
+        assert p.get_player_game_log('Antonio Brown', 'WR', 2011)['snap_pct'][0] == 'Not Available'
+
+        # Tight ends did not have snap pct before 2012
+        assert p.get_player_game_log('Antonio Gates', 'TE', 2010)['snap_pct'][0] == 'Not Available'
 
         # improper position formatting
         with pytest.raises(Exception):

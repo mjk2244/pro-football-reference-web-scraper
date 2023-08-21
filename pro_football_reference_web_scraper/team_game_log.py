@@ -212,11 +212,18 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
     for k in range(j, len(games)):
         games.pop()
 
-    # remove bye week
-    j = 0
-    while games[j].find('td', {'data-stat': 'opp'}).text != 'Bye Week':
-        j += 1
-    games.pop(j)
+    # remove bye weeks
+    bye_weeks = []
+    for j in range(len(games)):
+        if games[j].find('td', {'data-stat': 'opp'}).text == 'Bye Week':
+            bye_weeks.append(j)
+
+    if len(bye_weeks) > 1:
+        games.pop(bye_weeks[0])
+        games.pop(bye_weeks[1] - 1)
+
+    elif len(bye_weeks) == 1:
+        games.pop(bye_weeks[0])
 
     # remove canceled games
     to_delete = []
@@ -225,12 +232,6 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             to_delete.append(j)
     for k in to_delete:
         games.pop(k)
-
-    # 1993 had two bye weeks
-    if season == 1993:
-        while games[j].find('td', {'data-stat': 'opp'}).text != 'Bye Week':
-            j += 1
-        games.pop(j)
 
     # gathering data
     for i in range(len(games)):
