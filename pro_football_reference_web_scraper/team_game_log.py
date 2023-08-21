@@ -222,6 +222,9 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         games.pop(bye_weeks[0])
         games.pop(bye_weeks[1] - 1)
 
+    elif len(bye_weeks) == 1:
+        games.pop(bye_weeks[0])
+
     # remove canceled games
     to_delete = []
     for j in range(len(games)):

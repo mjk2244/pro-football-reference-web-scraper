@@ -6,7 +6,7 @@ import time
 class TestClass:
     # INTEGRATION TESTS
     def test_get_team_game_log(self):
-        time.sleep(3)
+        time.sleep(8)
         bills_game_log = t.get_team_game_log('Buffalo Bills', 2022)
 
         # the Bills only played 16 games in 2022 due to the cancellation of their Week 17 game
