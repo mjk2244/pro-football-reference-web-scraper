@@ -17,9 +17,9 @@ class TestClass:
         <p><b><a href="/players/A/AlleJo02.htm">Josh Allen</a> (QB)</b> 2018-2022</p>
         <p><b><a href="/players/A/AlleJo03.htm">Josh Allen</a> (EDGE)</b> 2019-2022</p></div>"""
         soup = BeautifulSoup(fake_html, 'html.parser')
-        assert p.get_href('Josh Allen', 'C', 2014, soup) == '/players/A/AlleJo00.htm'
-        assert p.get_href('Josh Allen', 'QB', 2022, soup) == '/players/A/AlleJo02.htm'
-        assert p.get_href('Josh Allen', 'EDGE', 2020, soup) == '/players/A/AlleJo03.htm'
+        assert p.get_href('Josh Allen', 'C', 2014, soup) == '/players/A/AlleJo00'
+        assert p.get_href('Josh Allen', 'QB', 2022, soup) == '/players/A/AlleJo02'
+        assert p.get_href('Josh Allen', 'EDGE', 2020, soup) == '/players/A/AlleJo03'
 
     def test_make_request_player(self):
         response = p.make_request_player('/players/G/GurlTo01', 2018)
@@ -133,4 +133,35 @@ class TestClass:
         )
 
         # asserting that the returned dataframe is expected
-        assert p.wr_game_log(soup).equals(fake_df)
+        assert p.wr_game_log(soup, 2022).equals(fake_df)
+
+        # same exercise for season before 2012
+        # fake HTML to create BeautifulSoup object
+        fake_html = """<tbody><tr><td data-stat='game_date'>2011-09-11</td><td data-stat='week_num'>1</td>
+        <td data-stat='team'>TAM</td><td data-stat='game_location'>@</td><td data-stat='opp'>DAL</td>
+        <td data-stat='game_result'>W 19-3</td><td data-stat='targets'>18</td><td data-stat='rec'>27</td>
+        <td data-stat='rec_yds'>212</td><td data-stat='rec_td'>1</td><td data-stat='rec_yds'>1</td>
+        </tr></tbody>"""
+        soup = BeautifulSoup(fake_html, "html.parser")
+
+        # fake dataframe to check with returned dataframe
+        fake_df = pd.DataFrame(
+            {
+                "date": ["2011-09-11"],
+                "week": [1],
+                "team": ["TAM"],
+                "game_location": ["@"],
+                "opp": ["DAL"],
+                "result": ["W"],
+                "team_pts": [19],
+                "opp_pts": [3],
+                "tgt": [18],
+                "rec": [27],
+                "rec_yds": [212],
+                "rec_td": [1],
+                "snap_pct": ["Not Available"],
+            }
+        )
+
+        # asserting that the returned dataframe is expected
+        assert p.wr_game_log(soup, 2011).equals(fake_df)

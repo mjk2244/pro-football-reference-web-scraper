@@ -6,7 +6,7 @@ class TestClass:
     # INTEGRATION TESTS
 
     def test_home_road(self):
-        time.sleep(3)
+        time.sleep(5)
         team = 'Chicago Bears'
         season = 2022
 

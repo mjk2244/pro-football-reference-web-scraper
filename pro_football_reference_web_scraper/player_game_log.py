@@ -44,7 +44,7 @@ def get_player_game_log(player: str, position: str, season: int) -> pd.DataFrame
     if 'QB' in position:
         return qb_game_log(game_log)
     elif 'WR' in position or 'TE' in position:
-        return wr_game_log(game_log)
+        return wr_game_log(game_log, season)
     elif 'RB' in position:
         return rb_game_log(game_log)
 
@@ -56,7 +56,7 @@ def get_href(player: str, position: str, season: int, player_list: BeautifulSoup
         seasons = p.text.split(' ')
         seasons = seasons[len(seasons) - 1].split('-')
         if season >= int(seasons[0]) and season <= int(seasons[1]) and player in p.text and position in p.text:
-            return p.find('a').get('href')
+            return p.find('a').get('href').replace('.htm', '')
     raise Exception('Cannot find a ' + position + ' named ' + player + ' from ' + str(season))
 
 
@@ -109,7 +109,8 @@ def qb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     to_ignore = []
     for i in range(len(table_rows)):
         elements = table_rows[i].find_all('td')
-        if elements[len(elements) - 1].text == 'Inactive' or elements[len(elements) - 1].text == 'Did Not Play':
+        x = elements[len(elements) - 1].text
+        if x == 'Inactive' or x == 'Did Not Play' or x == 'Injured Reserve':
             to_ignore.append(i)
 
     # adding data to data dictionary
@@ -142,7 +143,7 @@ def qb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
 
 
 # helper function that takes a BeautifulSoup object and converts it into a pandas dataframe containing a WR/TE game log
-def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
+def wr_game_log(soup: BeautifulSoup, season: int) -> pd.DataFrame:
     # Most relevant WR stats, in my opinion.
     # Could adjust if necessary (maybe figure out how to incorporate rushing stats?)
 
@@ -168,7 +169,8 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     to_ignore = []
     for i in range(len(table_rows)):
         elements = table_rows[i].find_all('td')
-        if elements[len(elements) - 1].text == 'Inactive' or elements[len(elements) - 1].text == 'Did Not Play':
+        x = elements[len(elements) - 1].text
+        if x == 'Inactive' or x == 'Did Not Play' or x == 'Injured Reserve':
             to_ignore.append(i)
 
     # adding data to data dictionray
@@ -190,7 +192,10 @@ def wr_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
             data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
             data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
-            data['snap_pct'].append(float(int(table_rows[i].find('td', {'data-stat': 'off_pct'}).text[:-1]) / 100))
+            if season > 2011:
+                data['snap_pct'].append(float(int(table_rows[i].find('td', {'data-stat': 'off_pct'}).text[:-1]) / 100))
+            else:
+                data['snap_pct'].append('Not Available')
 
     return pd.DataFrame(data=data)
 
@@ -220,7 +225,8 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
     to_ignore = []
     for i in range(len(table_rows)):
         elements = table_rows[i].find_all('td')
-        if elements[len(elements) - 1].text == 'Inactive' or elements[len(elements) - 1].text == 'Did Not Play':
+        x = elements[len(elements) - 1].text
+        if x == 'Inactive' or x == 'Did Not Play' or x == 'Injured Reserve':
             to_ignore.append(i)
 
     # adding data to data dictionary
@@ -246,3 +252,11 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
 
     return pd.DataFrame(data=data)
+
+
+def main():
+    print(get_player_game_log('Jonathan Taylor', 'RB', 2021))
+
+
+if __name__ == '__main__':
+    main()
