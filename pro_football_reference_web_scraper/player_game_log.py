@@ -215,6 +215,7 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
         'rush_yds': [],
         'rush_td': [],
         'tgt': [],
+        'rec': [],
         'rec_yds': [],
         'rec_td': [],
     }  # type: dict
@@ -248,6 +249,7 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
             data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
             data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
+            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
             data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
             data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
 
