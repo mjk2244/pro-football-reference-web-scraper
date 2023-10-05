@@ -265,13 +265,27 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['opp_pts'].append(
                 int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
             )
-            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
-            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
-            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
-            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
-            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
-            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
-            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
+            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_att'}).text != '' else data['rush_att'].append(0)
+            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_yds'}).text != '' else data['rush_yds'].append(0)
+            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rush_td'}
+            ).text != '' else data['rush_td'].append(0)
+            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'targets'}
+            ).text != '' else data['tgt'].append(0)
+            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec'}
+            ).text != '' else data['rec'].append(0)
+            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec_yds'}
+            ).text != '' else data['rec_yds'].append(0)
+            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec_td'}
+            ).text != '' else data['rec_td'].append(0)
 
     return pd.DataFrame(data=data)
 
