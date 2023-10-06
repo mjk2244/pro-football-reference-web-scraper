@@ -22,6 +22,9 @@ class TestClass:
         # the Bills won 13 games in 2022
         assert w == 13
 
+        # Team with blank cell data for week 17 (record 15) of 2003 regular season
+        assert t.get_team_game_log('Oakland Raiders', 2003)['pass_yds'][15] == 0
+
         # misspelled team name
         with pytest.raises(Exception):
             t.get_team_game_log('Bufalo Bills', 2022)

@@ -271,12 +271,36 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         result = games[i].find('td', {'data-stat': 'game_outcome'}).text
         points_for = int(games[i].find('td', {'data-stat': 'pts_off'}).text)
         points_allowed = int(games[i].find('td', {'data-stat': 'pts_def'}).text)
-        tot_yds = int(games[i].find('td', {'data-stat': 'yards_off'}).text)
-        pass_yds = int(games[i].find('td', {'data-stat': 'pass_yds_off'}).text)
-        rush_yds = int(games[i].find('td', {'data-stat': 'rush_yds_off'}).text)
-        opp_tot_yds = int(games[i].find('td', {'data-stat': 'yards_def'}).text)
-        opp_pass_yds = int(games[i].find('td', {'data-stat': 'pass_yds_def'}).text)
-        opp_rush_yds = int(games[i].find('td', {'data-stat': 'rush_yds_def'}).text)
+        tot_yds = (
+            int(games[i].find('td', {'data-stat': 'yards_off'}).text)
+            if games[i].find('td', {'data-stat': 'yards_off'}).text != ''
+            else 0
+        )
+        pass_yds = (
+            int(games[i].find('td', {'data-stat': 'pass_yds_off'}).text)
+            if games[i].find('td', {'data-stat': 'pass_yds_off'}).text != ''
+            else 0
+        )
+        rush_yds = (
+            int(games[i].find('td', {'data-stat': 'rush_yds_off'}).text)
+            if games[i].find('td', {'data-stat': 'rush_yds_off'}).text != ''
+            else 0
+        )
+        opp_tot_yds = (
+            int(games[i].find('td', {'data-stat': 'yards_def'}).text)
+            if games[i].find('td', {'data-stat': 'yards_def'}).text != ''
+            else 0
+        )
+        opp_pass_yds = (
+            int(games[i].find('td', {'data-stat': 'pass_yds_def'}).text)
+            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
+            else 0
+        )
+        opp_rush_yds = (
+            int(games[i].find('td', {'data-stat': 'rush_yds_def'}).text)
+            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
+            else 0
+        )
 
         # add row to data frame
         df.loc[len(df.index)] = [
