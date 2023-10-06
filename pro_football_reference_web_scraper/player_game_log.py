@@ -128,16 +128,36 @@ def qb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['opp_pts'].append(
                 int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
             )
-            data['cmp'].append(int(table_rows[i].find('td', {'data-stat': 'pass_cmp'}).text))
-            data['att'].append(int(table_rows[i].find('td', {'data-stat': 'pass_att'}).text))
-            data['pass_yds'].append(int(table_rows[i].find('td', {'data-stat': 'pass_yds'}).text))
-            data['pass_td'].append(int(table_rows[i].find('td', {'data-stat': 'pass_td'}).text))
-            data['int'].append(int(table_rows[i].find('td', {'data-stat': 'pass_int'}).text))
-            data['rating'].append(float(table_rows[i].find('td', {'data-stat': 'pass_rating'}).text))
-            data['sacked'].append(int(table_rows[i].find('td', {'data-stat': 'pass_sacked'}).text))
-            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
-            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
-            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
+            data['cmp'].append(int(table_rows[i].find('td', {'data-stat': 'pass_cmp'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'pass_cmp'}
+            ).text != '' else data['cmp'].append(0)
+            data['att'].append(int(table_rows[i].find('td', {'data-stat': 'pass_att'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'pass_att'}
+            ).text != '' else data['att'].append(0)
+            data['pass_yds'].append(int(table_rows[i].find('td', {'data-stat': 'pass_yds'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'pass_yds'}).text != '' else data['pass_yds'].append(0)
+            data['pass_td'].append(int(table_rows[i].find('td', {'data-stat': 'pass_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'pass_td'}
+            ).text != '' else data['pass_td'].append(0)
+            data['int'].append(int(table_rows[i].find('td', {'data-stat': 'pass_int'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'pass_int'}
+            ).text != '' else data['int'].append(0)
+            data['rating'].append(float(table_rows[i].find('td', {'data-stat': 'pass_rating'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'pass_rating'}).text != '' else data['rating'].append(0)
+            data['sacked'].append(int(table_rows[i].find('td', {'data-stat': 'pass_sacked'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'pass_sacked'}).text != '' else data['sacked'].append(0)
+            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_att'}).text != '' else data['rush_att'].append(0)
+            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_yds'}).text != '' else data['rush_yds'].append(0)
+            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rush_td'}
+            ).text != '' else data['rush_td'].append(0)
 
     return pd.DataFrame(data=data)
 
@@ -245,13 +265,27 @@ def rb_game_log(soup: BeautifulSoup) -> pd.DataFrame:
             data['opp_pts'].append(
                 int(table_rows[i].find('td', {'data-stat': 'game_result'}).text.split(' ')[1].split('-')[1])
             )
-            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text))
-            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text))
-            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text))
-            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text))
-            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text))
-            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text))
-            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text))
+            data['rush_att'].append(int(table_rows[i].find('td', {'data-stat': 'rush_att'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_att'}).text != '' else data['rush_att'].append(0)
+            data['rush_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rush_yds'}).text)) if table_rows[
+                i
+            ].find('td', {'data-stat': 'rush_yds'}).text != '' else data['rush_yds'].append(0)
+            data['rush_td'].append(int(table_rows[i].find('td', {'data-stat': 'rush_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rush_td'}
+            ).text != '' else data['rush_td'].append(0)
+            data['tgt'].append(int(table_rows[i].find('td', {'data-stat': 'targets'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'targets'}
+            ).text != '' else data['tgt'].append(0)
+            data['rec'].append(int(table_rows[i].find('td', {'data-stat': 'rec'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec'}
+            ).text != '' else data['rec'].append(0)
+            data['rec_yds'].append(int(table_rows[i].find('td', {'data-stat': 'rec_yds'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec_yds'}
+            ).text != '' else data['rec_yds'].append(0)
+            data['rec_td'].append(int(table_rows[i].find('td', {'data-stat': 'rec_td'}).text)) if table_rows[i].find(
+                'td', {'data-stat': 'rec_td'}
+            ).text != '' else data['rec_td'].append(0)
 
     return pd.DataFrame(data=data)
 

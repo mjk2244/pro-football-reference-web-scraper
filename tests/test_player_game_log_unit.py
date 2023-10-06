@@ -77,8 +77,8 @@ class TestClass:
         fake_html = """<tbody><tr><td data-stat='game_date'>2022-09-11</td><td data-stat='week_num'>1</td>
         <td data-stat='team'>TAM</td><td data-stat='game_location'>@</td><td data-stat='opp'>DAL</td>
         <td data-stat='game_result'>W 19-3</td><td data-stat='rush_att'>18</td><td data-stat='rush_yds'>27</td>
-        <td data-stat='rush_td'>212</td><td data-stat='targets'>1</td><td data-stat='rec'>1</td><td data-stat='rec_yds'>1</td>
-        <td data-stat='rec_td'>1</td></tr></tbody>"""
+        <td data-stat='rush_td'>212</td><td data-stat='targets'>1</td><td data-stat='rec'>1</td>
+        <td data-stat='rec_yds'>1</td><td data-stat='rec_td'>1</td></tr></tbody>"""
         soup = BeautifulSoup(fake_html, "html.parser")
 
         # fake dataframe to check with returned dataframe

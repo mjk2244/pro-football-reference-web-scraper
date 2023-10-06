@@ -22,6 +22,12 @@ class TestClass:
         # Tight ends did not have snap pct before 2012
         assert p.get_player_game_log('Antonio Gates', 'TE', 2010)['snap_pct'][0] == 'Not Available'
 
+        # Quarterback with blank cell data for week 3 (record 1, ignoring 2 'Did Not Play' weeks) of 2023 regular season
+        assert p.get_player_game_log('Dorian Thompson-Robinson', 'QB', 2023)['cmp'][0] == 0
+
+        # Running back with blank cell data for week 17 (record 9, ignoring 7 'DNP' weeks) of 2022 regular season
+        assert p.get_player_game_log('Kyren Williams', 'RB', 2022)['rush_yds'][9] == 0
+
         # improper position formatting
         with pytest.raises(Exception):
             p.get_player_game_log('Patrick Mahomes', 'Quarterback', 2022)
