@@ -269,8 +269,15 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             distance_travelled = 0
 
         result = games[i].find('td', {'data-stat': 'game_outcome'}).text
-        points_for = int(games[i].find('td', {'data-stat': 'pts_off'}).text)
-        points_allowed = int(games[i].find('td', {'data-stat': 'pts_def'}).text)
+        points_for = (
+            int(games[i].find('td', {'data-stat': 'pts_off'}).text)
+            if int(games[i].find('td', {'data-stat': 'pts_off'}).text) != ''
+            else 0
+        )
+        points_allowed = (
+            int(games[i].find('td', {'data-stat': 'pts_def'}).text)
+            if games[i].find('td', {'data-stat': 'pts_def'}).text != ''
+            else 0
         tot_yds = (
             int(games[i].find('td', {'data-stat': 'yards_off'}).text)
             if games[i].find('td', {'data-stat': 'yards_off'}).text != ''
