@@ -271,39 +271,46 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
         result = games[i].find('td', {'data-stat': 'game_outcome'}).text
         points_for = int(games[i].find('td', {'data-stat': 'pts_off'}).text)
         points_allowed = (
-            if games[i].find('td', {'data-stat': 'pts_def'}).text != ''
+            if games[i].find('td', {'data-stat': 'pts_def'}).text != '':
                 int(games[i].find('td', {'data-stat': 'pts_def'}).text)
-            else 0
+            else: 
+                0
         )
         tot_yds = (
-            if games[i].find('td', {'data-stat': 'yards_off'}).text != ''
+            if games[i].find('td', {'data-stat': 'yards_off'}).text != '':
                 int(games[i].find('td', {'data-stat': 'yards_off'}).text)
-            else 0
+            else: 
+                0
         )
         pass_yds = (
-            if games[i].find('td', {'data-stat': 'pass_yds_off'}).text != ''
+            if games[i].find('td', {'data-stat': 'pass_yds_off'}).text != '':
                 int(games[i].find('td', {'data-stat': 'pass_yds_off'}).text)
-            else 0
+            else: 
+                0
         )
         rush_yds = (
-            if games[i].find('td', {'data-stat': 'rush_yds_off'}).text != ''
+            if games[i].find('td', {'data-stat': 'rush_yds_off'}).text != '':
                 int(games[i].find('td', {'data-stat': 'rush_yds_off'}).text)
-            else 0
+            else: 
+                0
         )
         opp_tot_yds = (
-            if games[i].find('td', {'data-stat': 'yards_def'}).text != ''
+            if games[i].find('td', {'data-stat': 'yards_def'}).text != '':
                 int(games[i].find('td', {'data-stat': 'yards_def'}).text)
-            else 0
+            else: 
+                0
         )
         opp_pass_yds = (
-            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
+            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != '':
                 int(games[i].find('td', {'data-stat': 'pass_yds_def'}).text)
-            else 0
+            else: 
+                0
         )
         opp_rush_yds = (
-            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
+            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != '':
                 int(games[i].find('td', {'data-stat': 'rush_yds_def'}).text)
-            else 0
+            else: 
+                0
         )
 
         # add row to data frame
