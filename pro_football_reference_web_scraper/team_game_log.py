@@ -269,38 +269,46 @@ def collect_data(soup: BeautifulSoup, season: int, team: str) -> pd.DataFrame:
             distance_travelled = 0
 
         result = games[i].find('td', {'data-stat': 'game_outcome'}).text
-        points_for = int(games[i].find('td', {'data-stat': 'pts_off'}).text)
-        points_allowed = int(games[i].find('td', {'data-stat': 'pts_def'}).text)
-        tot_yds = (
-            int(games[i].find('td', {'data-stat': 'yards_off'}).text)
-            if games[i].find('td', {'data-stat': 'yards_off'}).text != ''
-            else 0
-        )
-        pass_yds = (
-            int(games[i].find('td', {'data-stat': 'pass_yds_off'}).text)
-            if games[i].find('td', {'data-stat': 'pass_yds_off'}).text != ''
-            else 0
-        )
-        rush_yds = (
-            int(games[i].find('td', {'data-stat': 'rush_yds_off'}).text)
-            if games[i].find('td', {'data-stat': 'rush_yds_off'}).text != ''
-            else 0
-        )
-        opp_tot_yds = (
-            int(games[i].find('td', {'data-stat': 'yards_def'}).text)
-            if games[i].find('td', {'data-stat': 'yards_def'}).text != ''
-            else 0
-        )
-        opp_pass_yds = (
-            int(games[i].find('td', {'data-stat': 'pass_yds_def'}).text)
-            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
-            else 0
-        )
-        opp_rush_yds = (
-            int(games[i].find('td', {'data-stat': 'rush_yds_def'}).text)
-            if games[i].find('td', {'data-stat': 'pass_yds_def'}).text != ''
-            else 0
-        )
+        points_for_text = games[i].find('td', {'data-stat': 'pts_off'}).text
+        if points_for_text.strip():
+            points_for = int(points_for_text)
+        else:
+            points_for = 0
+        points_allowed_text = games[i].find('td', {'data-stat': 'pts_def'}).text
+        if points_allowed_text.strip():
+            points_allowed = int(points_allowed_text)
+        else:
+            points_allowed = 0
+        tot_yds_text = games[i].find('td', {'data-stat': 'yards_off'}).text
+        if tot_yds_text.strip():
+            tot_yds = int(tot_yds_text)
+        else:
+            tot_yds = 0
+        pass_yds_text = games[i].find('td', {'data-stat': 'pass_yds_off'}).text
+        if pass_yds_text.strip():
+            pass_yds = int(pass_yds_text)
+        else:
+            pass_yds = 0
+        rush_yds_text = games[i].find('td', {'data-stat': 'rush_yds_off'}).text
+        if rush_yds_text.strip():
+            rush_yds = int(rush_yds_text)
+        else:
+            rush_yds = 0
+        opp_tot_yds_text = games[i].find('td', {'data-stat': 'yards_def'}).text
+        if opp_tot_yds_text.strip():
+            opp_tot_yds = int(opp_tot_yds_text)
+        else:
+            opp_tot_yds = 0
+        opp_pass_yds_text = games[i].find('td', {'data-stat': 'pass_yds_def'}).text
+        if opp_pass_yds_text.strip():
+            opp_pass_yds = int(opp_pass_yds_text)
+        else:
+            opp_pass_yds = 0
+        opp_rush_yds_text = games[i].find('td', {'data-stat': 'pass_yds_def'}).text
+        if opp_rush_yds_text.strip():
+            opp_rush_yds = int(opp_rush_yds_text)
+        else:
+            opp_rush_yds = 0
 
         # add row to data frame
         df.loc[len(df.index)] = [
